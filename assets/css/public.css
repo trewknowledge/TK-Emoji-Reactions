@@ -1,0 +1,75 @@
+.emojionearea {
+	border: none;
+	margin-top: 10px;
+	width: 45px !important;
+	margin-right: 10px;
+}
+.emojionearea:hover .emojionearea-button {
+	opacity: 1;
+}
+.emojionearea.emojionearea-standalone .emojionearea-button {
+	outline: none;
+	background: #F6F6F6;
+	padding: 3px 6px;
+	border-radius: 15px;
+	border: 1px solid transparent;
+	width: 45px;
+}
+.emojionearea.emojionearea-standalone .emojionearea-button:hover {
+	border: 1px solid #000;
+	background: #fff;
+}
+.emojionearea-button-open, .emojionearea-button-close {
+	left: 50% !important;
+	transform: translate3d(-50%,0,0) !important;
+}
+.emojionearea-editor {
+	display: none !important;
+}
+.emojionearea.emojionearea-standalone .emojionearea-button > div {
+	top: 0;
+	right: 0;
+	left: 0;
+	bottom: 0;
+}
+
+.emojionearea .emojionearea-picker.emojionearea-picker-position-right {
+	right: -20px;
+	top: -12px;
+}
+
+.comment-reactions {
+	display: flex;
+  flex-wrap: wrap;
+}
+.comment-reactions .reaction button {
+	outline: none;
+	background: #F6F6F6;
+	padding: 3px 6px;
+	color: #000;
+	border-radius: 15px;
+	font-size: 13px;
+	font-weight: normal;
+	-webkit-appearance: none;
+	appearance: none;
+	margin-right: 10px;
+	margin-top: 10px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	border: 1px solid transparent;
+}
+.comment-reactions .reaction button .count {
+	margin-left: 7px;
+}
+.comment-reactions .reaction button img {
+	max-width: 16px;
+}
+.comment-reactions .reaction button:hover {
+	border: 1px solid #000;
+	background: #fff;
+}
+.comment-reactions .reaction.tker_active button {
+	border: 1px solid #1D9CD1;
+	background: #E7F5FB;
+}
