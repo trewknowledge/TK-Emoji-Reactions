@@ -27,7 +27,7 @@
 			}
 		},
 		saveReactionToDB: function( container, comment_id, emoji ) {
-			if ( TKER.user_id == 0 ) {
+			if ( ! TKER.logged_in ) {
 				$(document).trigger('tker_ask_for_login');
 				return;
 			}
@@ -38,7 +38,6 @@
 				data: {
 					action: 'tk_emoji_reaction_save',
 					nonce: TKER.nonce,
-					user_id: TKER.user_id,
 					comment_id: comment_id,
 					emoji: emoji,
 				},

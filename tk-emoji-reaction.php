@@ -29,7 +29,7 @@ add_action( 'wp_enqueue_scripts', function() {
 	wp_localize_script( 'tk-emoji-reaction-public-js', 'TKER', array(
 		'ajaxurl' => admin_url( 'admin-ajax.php' ),
 		'nonce' => wp_create_nonce( 'tk_save_reaction_nonce' ),
-		'user_id' => get_current_user_id(),
+		'logged_in' => is_user_logged_in(),
 	) );
 });
 
@@ -133,9 +133,6 @@ add_action( 'wp_ajax_tk_emoji_reaction_save', function() {
 	if ( empty( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'tk_save_reaction_nonce' ) ) {
 		wp_send_json_error( 'Nonce failed' );
 	}
-	if ( empty( $_POST['user_id'] ) ) {
-		wp_send_json_error( 'User ID is required.' );
-	}
 	if ( empty( $_POST['comment_id'] ) ) {
 		wp_send_json_error( 'Comment ID is required.' );
 	}
@@ -143,7 +140,7 @@ add_action( 'wp_ajax_tk_emoji_reaction_save', function() {
 		wp_send_json_error( 'A reaction is required.' );
 	}
 
-	$user_id           = absint( $_POST['user_id'] );
+	$user_id           = get_current_user_id();
 	$comment_id        = absint( $_POST['comment_id'] );
 	$emoji             = sanitize_text_field( wp_unslash( $_POST['emoji'] ) );
 	$user_reacted      = false;
