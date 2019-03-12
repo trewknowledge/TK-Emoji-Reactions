@@ -54,7 +54,6 @@ function tker_comment_callback( $comment, $args, $depth ) {
 	<div class="comment-reactions" data-comment-id="<?php echo esc_attr( $comment->comment_ID ); ?>">
 		<div class="reaction template" style="display: none;">
 			<button type="button">
-				<span class="emoji"></span>
 				<span class="count"></span>
 			</button>
 		</div>
