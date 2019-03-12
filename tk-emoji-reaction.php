@@ -34,12 +34,55 @@ add_action( 'wp_enqueue_scripts', function() {
 });
 
 
-add_filter( 'wp_list_comments_args', function( $args ) {
-	if ( empty( $args['callback'] ) ) {
-		$args['end-callback'] = 'tker_comment_callback';
-	}
-	return $args;
-});
+add_filter( 'comment_reply_link', function( $link, $args, $comment, $post ) {
+	$new_html = '';
+
+	// Load emoji instead of shortname.
+	$emojioneClient = new EmojioneClient();
+	Emojione::setClient( $emojioneClient );
+
+	$reactions      = get_comment_meta( $comment->comment_ID, 'tker_reactions', true );
+	$reactions      = $reactions ?: array();
+	$user_reactions = get_user_meta( get_current_user_id(), "tker_comment_id_{$comment->comment_ID}", true );
+	$user_reactions = $user_reactions ?: array();
+	ob_start();
+	?>
+	<div class="comment-reactions" data-comment-id="<?php echo esc_attr( $comment->comment_ID ); ?>">
+		<div class="reaction template" style="display: none;">
+			<button type="button">
+				<span class="count"></span>
+			</button>
+		</div>
+		<div class="tker-reaction-picker"></div>
+		<?php if ( ! empty( $reactions ) ): ?>
+			<?php $emoji_kses = array(
+				'img' => array(
+					'src' => true,
+					'class' => true,
+					'title' => true,
+				),
+			); ?>
+			<?php foreach ( $reactions as $emoji => $count ): ?>
+				<?php
+					$active = '';
+					if ( in_array( $emoji, $user_reactions, true ) ) {
+						$active = 'tker_active';
+					}
+				?>
+				<div class="reaction <?php echo esc_attr( $active ); ?>" data-emoji="<?php echo esc_attr( $emoji ); ?>">
+					<button type="button">
+						<?php echo wp_kses( Emojione::shortnameToImage( $emoji ), $emoji_kses ) ; ?>
+						<span class="count"><?php echo esc_html( $count ); ?></span>
+					</button>
+				</div>
+			<?php endforeach ?>
+		<?php endif ?>
+	</div>
+	<?php
+	$new_html = ob_get_clean();
+	$new_html = $link . $new_html;
+	return $new_html;
+}, 10, 4 );
 
 function tker_comment_callback( $comment, $args, $depth ) {
 	// Load emoji instead of shortname.
