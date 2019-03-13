@@ -42,6 +42,7 @@
 .comment-reactions {
 	display: flex;
   flex-wrap: wrap;
+  min-height: 24px;
 }
 .comment-reactions .reaction button {
 	outline: none;
