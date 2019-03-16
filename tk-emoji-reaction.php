@@ -12,7 +12,7 @@
  * @package         Tk_Emoji_Reaction
  */
 
-require 'vendor/autoload.php';
+require 'dependencies/emojione/autoload.php';
 
 use Emojione\Emojione;
 use Emojione\Client as EmojioneClient;
