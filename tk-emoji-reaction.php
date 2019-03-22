@@ -84,52 +84,7 @@ add_filter( 'comment_reply_link', function( $link, $args, $comment, $post ) {
 	return $new_html;
 }, 10, 4 );
 
-function tker_comment_callback( $comment, $args, $depth ) {
-	// Load emoji instead of shortname.
-	$emojioneClient = new EmojioneClient();
-	Emojione::setClient( $emojioneClient );
-
-	$reactions      = get_comment_meta( $comment->comment_ID, 'tker_reactions', true );
-	$reactions      = $reactions ?: array();
-	$user_reactions = get_user_meta( get_current_user_id(), "tker_comment_id_{$comment->comment_ID}", true );
-	$user_reactions = $user_reactions ?: array();
-	?>
-	<div class="comment-reactions" data-comment-id="<?php echo esc_attr( $comment->comment_ID ); ?>">
-		<div class="reaction template" style="display: none;">
-			<button type="button">
-				<span class="count"></span>
-			</button>
-		</div>
-		<div class="tker-reaction-picker"></div>
-		<?php if ( ! empty( $reactions ) ): ?>
-			<?php $emoji_kses = array(
-				'img' => array(
-					'src' => true,
-					'class' => true,
-					'title' => true,
-				),
-			); ?>
-			<?php foreach ( $reactions as $emoji => $count ): ?>
-				<?php
-					$active = '';
-					if ( in_array( $emoji, $user_reactions, true ) ) {
-						$active = 'tker_active';
-					}
-				?>
-				<div class="reaction <?php echo esc_attr( $active ); ?>" data-emoji="<?php echo esc_attr( $emoji ); ?>">
-					<button type="button">
-						<?php echo wp_kses( Emojione::shortnameToImage( $emoji ), $emoji_kses ) ; ?>
-						<span class="count"><?php echo esc_html( $count ); ?></span>
-					</button>
-				</div>
-			<?php endforeach ?>
-		<?php endif ?>
-	</div>
-	<?php
-}
-
 add_action( 'wp_ajax_tk_emoji_reaction_save', function() {
-	error_log(print_r($_POST, true));
 	if ( empty( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'tk_save_reaction_nonce' ) ) {
 		wp_send_json_error( 'Nonce failed' );
 	}
