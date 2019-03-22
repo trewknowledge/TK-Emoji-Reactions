@@ -278,11 +278,11 @@ class Client implements ClientInterface
 
             if ($this->sprites)
             {
-                return '<span class="emojione emojione-'.$this->spriteSize.'-'.$category.' _'.$filename.'" '.$titleTag.'>'.$alt.'</span>';
+                return '<span class="emojione emojione-'.esc_attr( $this->spriteSize.'-'.$category.' _'.$filename ).'" '.$titleTag.'>'.esc_html($alt).'</span>';
             }
             else
             {
-                return '<img class="emojione" alt="'.$alt.'" '.$titleTag.' src="' . $this->imagePathPNG . $filename . $this->fileExtension . '"/>';
+                return '<img class="emojione" alt="'.esc_attr($alt).'" '.$titleTag.' src="' . esc_url( $this->imagePathPNG . $filename . $this->fileExtension ) . '"/>';
             }
         }
     }
@@ -389,11 +389,11 @@ class Client implements ClientInterface
 
                 if ($this->sprites)
                 {
-                    return $m[2].'<span class="emojione emojione-'.$this->spriteSize.'-'.$category.' _'.$filename.'" '.$titleTag.'>'.$alt.'</span>';
+                    return $m[2].'<span class="emojione emojione-'.esc_attr( $this->spriteSize.'-'.$category.' _'.$filename ).'" '.$titleTag.'>'.esc_html($alt).'</span>';
                 }
                 else
                 {
-                    return $m[2].'<img class="emojione" alt="'.$alt.'" '.$titleTag.' src="' . $this->imagePathPNG . $filename . $this->fileExtension .'"/>';
+                    return $m[2].'<img class="emojione" alt="'.esc_attr($alt).'" '.$titleTag.' src="' . esc_url( $this->imagePathPNG . $filename . $this->fileExtension ).'"/>';
                 }
             }
         }
