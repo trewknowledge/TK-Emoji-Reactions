@@ -10,7 +10,7 @@
 			TKEmojiReaction.updateCount( clone );
 			clone.removeClass( 'template' ).addClass('tker_active');
 			clone.css('display', 'inline-block');
-			container.find('.emojionearea').after( clone );
+			container.append( clone );
 		},
 		updateCount: function( node, add = true ) {
 			var count = node.find( '.count' ).text();
@@ -70,18 +70,9 @@
 	    	emojibtn_click: function ( btn ) {
 	    		var emojiName = btn.data( 'name' );
 	    		var container = btn.closest( '.comment-reactions' );
-	    		// var existingDiv = container.find( '[data-emoji="' + emojiName + '"]' );
 	    		var comment_id = container.attr('data-comment-id');
 
     			TKEmojiReaction.saveReactionToDB( container, comment_id, emojiName );
-
-	    		// if ( ! existingDiv.length ) {
-	    			//Save to DB.
-	    			// TKEmojiReaction.addReaction( container, emojiName );
-	    		// } else {
-	    			// TKEmojiReaction.updateReactionCount( existingDiv, true ); // add
-	    			// saveReactionToDB( comment_id, emojiName );
-	    		// }
 	    	}
 	    }
 		});
