@@ -20,17 +20,19 @@ use Emojione\Client as EmojioneClient;
 define( 'TK_EMOJI_REACTION_VERSION', '1.0.0' );
 
 add_action( 'wp_enqueue_scripts', function() {
-	wp_enqueue_style( 'tk-emoji-reaction-emoji-css', plugin_dir_url( __FILE__ ) . 'assets/css/emojionearea.min.css', array(), TK_EMOJI_REACTION_VERSION );
-	wp_enqueue_script( 'tk-emoji-reaction-emoji-js', plugin_dir_url( __FILE__ ) . 'assets/js/emojionearea.min.js', array(), TK_EMOJI_REACTION_VERSION, true );
+	if ( is_singular() && comments_open() ) {
+		wp_enqueue_style( 'tk-emoji-reaction-emoji-css', plugin_dir_url( __FILE__ ) . 'assets/css/emojionearea.min.css', array(), TK_EMOJI_REACTION_VERSION );
+		wp_enqueue_script( 'tk-emoji-reaction-emoji-js', plugin_dir_url( __FILE__ ) . 'assets/js/emojionearea.min.js', array(), TK_EMOJI_REACTION_VERSION, true );
 
-	wp_enqueue_style( 'tk-emoji-reaction-public-css', plugin_dir_url( __FILE__ ) . 'assets/css/public.css', array(), TK_EMOJI_REACTION_VERSION );
-	wp_enqueue_script( 'tk-emoji-reaction-public-js', plugin_dir_url( __FILE__ ) . 'assets/js/public.js', array( 'jquery', 'tk-emoji-reaction-emoji-js' ), TK_EMOJI_REACTION_VERSION, true );
+		wp_enqueue_style( 'tk-emoji-reaction-public-css', plugin_dir_url( __FILE__ ) . 'assets/css/public.css', array(), TK_EMOJI_REACTION_VERSION );
+		wp_enqueue_script( 'tk-emoji-reaction-public-js', plugin_dir_url( __FILE__ ) . 'assets/js/public.js', array( 'jquery', 'tk-emoji-reaction-emoji-js' ), TK_EMOJI_REACTION_VERSION, true );
 
-	wp_localize_script( 'tk-emoji-reaction-public-js', 'TKER', array(
-		'ajaxurl' => admin_url( 'admin-ajax.php' ),
-		'nonce' => wp_create_nonce( 'tk_save_reaction_nonce' ),
-		'logged_in' => is_user_logged_in(),
-	) );
+		wp_localize_script( 'tk-emoji-reaction-public-js', 'TKER', array(
+			'ajaxurl' => admin_url( 'admin-ajax.php' ),
+			'nonce' => wp_create_nonce( 'tk_save_reaction_nonce' ),
+			'logged_in' => is_user_logged_in(),
+		) );
+	}
 });
 
 
