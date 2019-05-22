@@ -1,12 +1,19 @@
+.emojionearea[role="application"] {
+	display: inline-block;
+  position: absolute !important;
+  z-index: 9;
+}
 .emojionearea {
 	border: none;
 	margin-top: 10px;
 	width: 45px !important;
 	margin-right: 10px;
 }
-.emojionearea:hover .emojionearea-button {
-	opacity: 1;
+
+.emojionearea .emojionearea-button {
+	opacity: 1 !important;
 }
+
 .emojionearea.emojionearea-standalone .emojionearea-button {
 	outline: none;
 	background: #F6F6F6;

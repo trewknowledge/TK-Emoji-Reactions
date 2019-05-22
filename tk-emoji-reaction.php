@@ -35,6 +35,12 @@ add_action( 'wp_enqueue_scripts', function() {
 	}
 });
 
+add_action( 'wp_footer', function() {
+	if ( comments_open() || get_comments_number() ) : ?>
+		<div id="real-emojionearea"></div>
+	<?php
+	endif;
+});
 
 add_filter( 'comment_reply_link', function( $link, $args, $comment, $post ) {
 	$new_html = '';
@@ -55,7 +61,11 @@ add_filter( 'comment_reply_link', function( $link, $args, $comment, $post ) {
 				<span class="count"></span>
 			</button>
 		</div>
-		<div class="tker-reaction-picker"></div>
+		<div class="emojionearea emojionearea-standalone tker-reaction-picker">
+		  <div class="emojionearea-button">
+		    <div class="emojionearea-button-open"></div>
+		  </div>
+		</div>
 		<?php if ( ! empty( $reactions ) ): ?>
 			<?php $emoji_kses = array(
 				'img' => array(
