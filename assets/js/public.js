@@ -57,9 +57,7 @@
 
 	$( function() {
 
-		var picker;
-
-		$( "#real-emojionearea" ).emojioneArea( {
+		$( ".tker-reaction-picker" ).emojioneArea( {
 	    standalone: true,
 	    autocomplete: false,
 	    emojiPlaceholder: "",
@@ -69,12 +67,6 @@
 	    },
 	    saveEmojisAs: 'unicode',
 	    events: {
-	    	ready: function() {
-  	      picker = {
-  					api: this,
-  	        wrapper: this.editor.parent().hide()
-  	      };
-  	    },
 	    	emojibtn_click: function ( btn ) {
 	    		var emojiName = btn.data( 'name' );
 	    		var container = btn.closest( '.comment-reactions' );
@@ -83,14 +75,6 @@
     			TKEmojiReaction.saveReactionToDB( container, comment_id, emojiName );
 	    	}
 	    }
-		});
-
-		$(document).on('click', '.tker-reaction-picker', function() {
-			picker.element = $(this);
-		  // picker.editor = picker.element.children(".emojionearea-editor");
-		  picker.element.before(picker.wrapper.show());
-		  // picker.api.editor.html(picker.editor.html()).attr("class", picker.editor.attr("class"));
-		  picker.api.showPicker();
 		});
 
 		$(document).on('click', '.reaction button', function( e ) {
